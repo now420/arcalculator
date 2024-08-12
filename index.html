@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Now's AR Calculator</title>
+  
+    <meta content="Now's AR Calculator" property="og:title" />
+    <meta content="Calculate approach rate from base with added mods" property="og:description" />
+    <meta content="https://ar.bidoof.app" property="og:url" />
+    <meta content="#43B581" data-react-helmet="true" name="theme-color" />
+  
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+        <h1 class="text-2xl font-bold mb-5">Now's AR Calculator</h1>
+        <input type="number" id="baseAR" min="0" max="10" step="0.1" value="5" class="border rounded p-2 mb-4">
+
+        <div class="mb-5">
+            <label class="inline-flex items-center mr-4">
+                <input type="checkbox" id="ez" class="mr-2">
+                <span class="text-lg">EZ</span>
+            </label>
+            <label class="inline-flex items-center mr-4">
+                <input type="checkbox" id="hr" class="mr-2">
+                <span class="text-lg">HR</span>
+            </label>
+            <label class="inline-flex items-center mr-4">
+                <input type="checkbox" id="ht" class="mr-2">
+                <span class="text-lg">HT</span>
+            </label>
+            <label class="inline-flex items-center">
+                <input type="checkbox" id="dt" class="mr-2">
+                <span class="text-lg">DT</span>
+            </label>
+        </div>
+
+        <button onclick="calculateAR()" class="bg-blue-500 text-white p-2 rounded">Calculate</button>
+
+        <div id="result" class="mt-5">
+            <p class="text-xl font-bold">Output AR: <span id="finalAR"></span></p>
+        </div>
+        <footer class="mt-8 text-center">
+            <p class="text-gray-600">Made by @saqqwd (Now) on Discord</p>
+        </footer>
+    </div>
+
+
+    <script>
+        function calculateAR() {
+            let baseAR = parseFloat(document.getElementById("baseAR").value);
+            let isEZ = document.getElementById("ez").checked;
+            let isHR = document.getElementById("hr").checked;
+            let isHT = document.getElementById("ht").checked;
+            let isDT = document.getElementById("dt").checked;
+
+            if (isEZ && isHR) {
+                alert("You cannot select both EZ and HR.");
+                return;
+            }
+
+            if (isDT && isHT) {
+                alert("You cannot select both DT and HT.");
+                return;
+            }
+
+            let finalAR = baseAR;
+
+            if (isEZ) {
+                finalAR *= 0.5;
+            }
+
+            if (isHR) {
+                finalAR *= 1.4;
+            }
+
+            if (isHT) {
+                finalAR = 0.75 * (finalAR - 5) + 5;
+            }
+
+            if (isDT) {
+                finalAR = (finalAR * 2 + 13) / 3;
+            }
+
+            if (finalAR > 11) {
+                finalAR = 11;
+            }
+
+            document.getElementById("finalAR").innerText = finalAR.toFixed(2);
+        }
+    </script>
+</body>
+</html>
